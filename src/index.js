@@ -1,15 +1,23 @@
 import './style.scss'
 
+import CSSOM from 'cssom'
+
 import InlineCodeEditor from './components/InlineCodeEditor'
 import InlineCodePreview from './components/InlineCodePreview'
 import InlineCodeConsole from './components/InlineCodeConsole'
 import InlineCodeCompiler from './components/InlineCodeCompiler'
 
 export default class InlineCodeSuite {
-  constructor ({ root, editors, scripts, preview, autoRun = true, name, height = '300px', importScripts }) {
+  constructor ({ root, editors, scripts, preview, autoRun = true, name, height = '300px', importScripts 
+  //OGAG
+  ,styles
+  }) {
     this.includeScripts = scripts ? scripts.filter( script => !script.runButton ) : []
     this.runScripts = scripts ? scripts.filter( script => script.runButton ) : []
     this.importScripts = importScripts
+    
+    //OMGA
+    this.validateCSS = styles ? styles.filter( style => style.ValidateButton ) : []
 
     // TODO: consolidate all settings into this.settings object (currently only used by preview setting to avoid conflict with this.preview object)
     this.settings = { preview: preview }
@@ -340,6 +348,28 @@ export default class InlineCodeSuite {
     }
     this.runEditorScripts()
     this.inlineCodeConsole.scrollToBottom()
+    this.getCurrentEditorData()
+  }
+
+  
+  getCurrentEditorData(){
+    let validScriptTypes = ['css']
+    let cssObject;
+    this.editors.forEach( editor => {
+      if( validScriptTypes.includes( editor.rendered.getMode() ) && editor.hasPreview !== false ) { 
+        let d = editor.rendered.getValue()
+
+        cssObject = CSSOM.parse(d)
+        
+        // if(cssObject.cssRules[0].style.display === 'flex') {
+        //   console.log('true')
+        // }else{
+        //   console.log('false');
+        // }
+      }
+    })
+
+    return cssObject;
   }
 }
 

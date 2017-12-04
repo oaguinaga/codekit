@@ -28,6 +28,7 @@
     "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "codemirror": "^5.27.4",
+    "cssom": "^0.3.2",
     "jshint": "^2.9.4",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
