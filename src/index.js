@@ -361,11 +361,11 @@ export default class InlineCodeSuite {
 
         cssObject = CSSOM.parse(d)
         
-        // if(cssObject.cssRules[0].style.display === 'flex') {
-        //   console.log('true')
-        // }else{
-        //   console.log('false');
-        // }
+        if(cssObject.cssRules[0].style.display === 'flex') {
+          console.log('true')
+        }else{
+          console.log('false');
+        }
       }
     })
 
